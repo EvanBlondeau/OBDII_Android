@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".MainActivity">
+
+    <item
+        android:id="@+id/action_BLE"
+        android:orderInCategory="300"
+        android:title="User"
+        android:icon="@drawable/baseline_bluetooth_white_18dp"
+        app:showAsAction="ifRoom"></item>
+
+    <item
+        android:id="@+id/action_Disco"
+        android:orderInCategory="200"
+        android:title="User"
+        android:icon="@drawable/baseline_bluetooth_searching_white_18dp"
+        app:showAsAction="ifRoom"></item>
+
+
+    <item
+        android:id="@+id/action_Gauge"
+        android:orderInCategory="100"
+        android:title="User"
+        android:icon="@drawable/baseline_equalizer_white_18dp"
+        app:showAsAction="ifRoom"></item>
+
+
+
+</menu>

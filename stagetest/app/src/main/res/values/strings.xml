@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">Bluetooth OBDII</string>
+    <string name="Text_input">Input</string>
+    <string name="Text_Output">Output</string>
+    <string name="Text_Try_connect">Try to connect with :</string>
+    <string name="Text_Connection_state">Connection state :</string>
+    <string name="Button_connection">Connection</string>
+    <string name="Text_val_state_connect">Disconnected</string>
+    <string name="text_connec" />
+    <string name="text_in_out">Send and receive Messages</string>
+    <string name="text_paired">Paired devices</string>
+    <string name="text_discover">Discover devices</string>
+    <string name="Text_null">\?</string>
+    <string name="Text_Tableaudebord">Tableau de bord</string>
+    <string name="text_capteur">Données des capteurs</string>
+    <string name="humidité">Capteur de l humidité</string>
+    <string name="luminosité">Capteur de luminosité</string>
+    <string name="avditance">Capteur de distance avant</string>
+    <string name="arditance">Capteur de distance arrière</string>
+    <string name="Text_pression">Capteur Pression athmosphétique</string>
+    <string name="capteur_temp">Capteur Température</string>
+    <string name="zero">0</string>
+</resources>
