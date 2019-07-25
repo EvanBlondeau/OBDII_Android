@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="chart_width">100dp</dimen>
+    <dimen name="start_margin">5dp</dimen>
+    <dimen name="end_margin">5dp</dimen>
+    <dimen name="heigth">35dp</dimen>
+</resources>

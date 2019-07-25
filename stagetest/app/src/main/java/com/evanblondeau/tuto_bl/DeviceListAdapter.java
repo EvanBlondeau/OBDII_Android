@@ -14,10 +14,10 @@ public class DeviceListAdapter extends ArrayAdapter<BluetoothDevice> {
 
     private LayoutInflater mLayoutInflater;
     private ArrayList<BluetoothDevice> mDevices;
-    private int  mViewResourceId;
+    private int mViewResourceId;
 
-    public DeviceListAdapter(Context context, int tvResourceId, ArrayList<BluetoothDevice> devices){
-        super(context, tvResourceId,devices);
+    public DeviceListAdapter(Context context, int tvResourceId, ArrayList<BluetoothDevice> devices) {
+        super(context, tvResourceId, devices);
         this.mDevices = devices;
         mLayoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         mViewResourceId = tvResourceId;
@@ -30,7 +30,7 @@ public class DeviceListAdapter extends ArrayAdapter<BluetoothDevice> {
 
         if (device != null) {
             TextView deviceName = convertView.findViewById(R.id.txt_name);
-            TextView deviceAdress =  convertView.findViewById(R.id.txt_adr);
+            TextView deviceAdress = convertView.findViewById(R.id.txt_adr);
 
             if (deviceName != null) {
                 deviceName.setText(device.getName());

@@ -1,44 +1,72 @@
 {
-    "Service 01": [
-            { "PID":"0C" ,
-                             "description":"Engine RPM" ,
-                             "unite":"rpm",
-                             "nbBytes":"4",
-                             "operations":"1",
-                             "operateur1":"/",
-                             "value1":"4",
-                              "print": "gauge"},
-
-            { "PID":"0D" ,
-                             "description":"Vehicle speed" ,
-                             "unite":"km/h",
-                             "nbBytes":"2",
-                             "operations":"false",
-                              "print": "gauge"},
-
-            { "PID":"33" ,
-                             "description":"Absolute Barometric Pressure" ,
-                              "unite":"kPa",
-                             "nbBytes":"2",
-                             "operations":"false",
-                             "print": "texte"},
-
-            { "PID":"46" ,
-                            "description":"Ambient air temperature" ,
-                            "unite": "°C",
-                            "nbBytes":"2",
-                            "operations":"1",
-                            "operateur1":"-",
-                            "value1":"40",
-                             "print": "texte"},
-
-            { "PID":"5C" ,
-                            "description":"Engine oil temperature " ,
-                            "unite": "°C",
-                            "nbBytes":"2",
-                            "operations":"1",
-                            "operateur1":"-",
-                            "value1":"40",
-                            "print": "gauge"}
-    ]
+  "Service 01": [
+    {
+      "PID": "0C",
+      "description": "Engine RPM",
+      "unite": "rpm",
+      "nbBytes": "4",
+      "operations": "1",
+      "operateur1": "/",
+      "value1": "4",
+      "print": "gauge"
+    },
+    {
+      "PID": "0D",
+      "description": "Vehicle speed",
+      "unite": "km/h",
+      "nbBytes": "2",
+      "operations": "false",
+      "print": "gauge"
+    },
+    {
+      "PID": "33",
+      "description": "Absolute Barometric Pressure",
+      "unite": "kPa",
+      "nbBytes": "2",
+      "operations": "false",
+      "print": "text"
+    },
+    {
+      "PID": "46",
+      "description": "Ambient air temperature",
+      "unite": "°C",
+      "nbBytes": "2",
+      "operations": "1",
+      "operateur1": "-",
+      "value1": "40",
+      "print": "text"
+    },
+    {
+      "PID": "5C",
+      "description": "Engine oil temperature",
+      "unite": "°C",
+      "nbBytes": "2",
+      "operations": "1",
+      "operateur1": "-",
+      "value1": "40",
+      "print": "gauge"
+    },
+    {
+      "PID": "05",
+      "description": "Engine coolant temperature",
+      "unite": "°C",
+      "nbBytes": "2",
+      "operations": "1",
+      "operateur1": "-",
+      "value1": "40",
+      "print": "text"
+    },
+    {
+      "PID": "04",
+      "description": "Calculated engine load",
+      "unite": "%",
+      "nbBytes": "2",
+      "operations": "2",
+      "operateur1": "*",
+      "value1": "100",
+      "operateur2": "/",
+      "value2": "255",
+      "print": "text"
     }
+  ]
+}

@@ -20,4 +20,9 @@
     <string name="Text_pression">Capteur Pression athmosphétique</string>
     <string name="capteur_temp">Capteur Température</string>
     <string name="zero">0</string>
+    <string name="text_return">back</string>
+    <string name="text_add">add</string>
+    <string name="text_dialog">Add a new PID</string>
+    <string name="but_dialog_pos">Add</string>
+    <string name="but_dialog_neg">Cancel</string>
 </resources>

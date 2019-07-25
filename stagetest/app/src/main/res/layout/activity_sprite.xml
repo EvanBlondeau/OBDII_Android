@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    xmlns:gauge="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    xmlns:gauge="http://schemas.android.com/apk/res-auto">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <include
         android:id="@+id/toolbar"
@@ -11,315 +11,336 @@
         tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="0dp" />
 
-    <LinearLayout
-        android:layout_width="fill_parent"
+    <ScrollView
+        android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:gravity="center_horizontal"
-        android:orientation="vertical"
         gauge:layout_constraintBottom_toBottomOf="parent"
         gauge:layout_constraintEnd_toEndOf="parent"
-        gauge:layout_constraintHorizontal_bias="0.0"
+        gauge:layout_constraintHorizontal_bias="1.0"
         gauge:layout_constraintStart_toStartOf="parent"
-        gauge:layout_constraintTop_toBottomOf="@+id/toolbar"
-        gauge:layout_constraintVertical_bias="0.0">
+        gauge:layout_constraintTop_toBottomOf="@+id/toolbar">
 
-        <TextView
-            android:id="@+id/textView2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginEnd="5dp"
-            android:background="@drawable/back"
-            android:gravity="center_horizontal"
-            android:text="@string/Text_Tableaudebord" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="116dp"
-            android:gravity="center_horizontal"
-            android:orientation="horizontal">
-
-            <de.nitri.gauge.Gauge
-                android:id="@+id/gaugeBaterry"
-                android:layout_width="96dp"
-                android:layout_height="95dp"
-                android:layout_gravity="center|center_horizontal"
-                android:layout_weight="1"
-                gauge:initialValue="0"
-                gauge:lowerText="Batterie"
-                gauge:maxValue="100"
-                gauge:minValue="0"
-                gauge:needleColor="@color/blue"
-                gauge:totalNicks="150"
-                gauge:upperText="%"
-                gauge:valuePerNick="1" />
-
-            <Space
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
-
-            <de.nitri.gauge.Gauge
-                android:id="@+id/gauge"
-                android:layout_width="132dp"
-                android:layout_height="114dp"
-                android:layout_gravity="center|center_horizontal"
-                gauge:initialValue="22"
-                gauge:lowerText="d"
-                gauge:maxValue="1000"
-                gauge:minValue="0"
-                gauge:totalNicks="120"
-                gauge:valuePerNick="10" />
-
-            <Space
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
-
-            <de.nitri.gauge.Gauge
-                android:id="@+id/gaugeliquide"
-                android:layout_width="97dp"
-                android:layout_height="94dp"
-                android:layout_gravity="center|center_horizontal"
-                android:layout_weight="1"
-                gauge:initialValue="0"
-                gauge:lowerText="Temp"
-                gauge:maxValue="180"
-                gauge:minValue="0"
-                gauge:needleColor="@color/debug_green"
-                gauge:totalNicks="100"
-                gauge:upperText="°C"
-                gauge:valuePerNick="2" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="159dp"
-            android:gravity="center_horizontal"
-            android:orientation="horizontal">
-
-            <de.nitri.gauge.Gauge
-                android:id="@+id/gaugeRPM"
-                android:layout_width="193dp"
-                android:layout_height="159dp"
-                android:layout_gravity="center|center_horizontal"
-                android:layout_marginStart="0dp"
-                android:layout_weight="1"
-                gauge:initialValue="0   "
-                gauge:lowerText="RPM"
-                gauge:maxValue="8000"
-                gauge:minValue="0"
-                gauge:totalNicks="100"
-                gauge:upperText="tr/min"
-                gauge:valuePerNick="100" />
-
-            <Space
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
-
-            <de.nitri.gauge.Gauge
-                android:id="@+id/gaugeVit"
-                android:layout_width="164dp"
-                android:layout_height="159dp"
-                android:layout_gravity="center|center_horizontal"
-                android:layout_marginStart="0dp"
-                android:layout_weight="1"
-                gauge:initialValue="0"
-                gauge:lowerText="Vitesse"
-                gauge:maxValue="200"
-                gauge:minValue="0"
-                gauge:totalNicks="120"
-                gauge:upperText="km/h"
-                gauge:valuePerNick="2" />
-        </LinearLayout>
-
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginEnd="5dp"
-            android:layout_marginBottom="5dp"
-            android:background="@drawable/back"
-            android:gravity="center_horizontal"
-            android:text="@string/text_capteur" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
-            android:layout_marginEnd="5dp"
-            android:baselineAligned="false"
-            android:orientation="horizontal">
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/textView18"
-                    android:layout_width="match_parent"
-                    android:layout_height="35dp"
-                    android:background="@drawable/back"
-                    android:gravity="center_horizontal"
-                    android:text="@string/capteur_temp" />
-
-                <TextView
-                    android:id="@+id/Text_Temp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_horizontal"
-                    android:text="@string/zero" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/textView14"
-                    android:layout_width="match_parent"
-                    android:layout_height="35dp"
-                    android:background="@drawable/back"
-                    android:gravity="center_horizontal"
-                    android:text="@string/luminosité" />
-
-                <TextView
-                    android:id="@+id/Text_luminosité"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_horizontal"
-                    android:text="@string/zero" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="0dp"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/textView11"
-                    android:layout_width="match_parent"
-                    android:layout_height="35dp"
-                    android:background="@drawable/back"
-                    android:gravity="center_horizontal"
-                    android:text="@string/humidité" />
-
-                <TextView
-                    android:id="@+id/Text_hummidité"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_horizontal"
-                    android:text="@string/zero" />
-            </LinearLayout>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
-            android:layout_marginEnd="5dp"
-            android:baselineAligned="false"
             android:gravity="center_horizontal"
-            android:orientation="horizontal">
+            android:orientation="vertical">
 
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="5dp"
+                android:background="@drawable/back"
                 android:gravity="center_horizontal"
-                android:orientation="vertical">
+                android:text="@string/Text_Tableaudebord" />
 
-                <TextView
-                    android:id="@+id/textView3"
-                    android:layout_width="match_parent"
-                    android:layout_height="35dp"
-                    android:background="@drawable/back"
-                    android:gravity="center_horizontal"
-                    android:text="@string/Text_pression" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="116dp"
+                android:gravity="center_horizontal"
+                android:orientation="horizontal">
 
-                <TextView
-                    android:id="@+id/Text_pression_athmos"
-                    android:layout_width="match_parent"
+                <de.nitri.gauge.Gauge
+                    android:id="@+id/gaugeBaterry"
+                    android:layout_width="96dp"
+                    android:layout_height="95dp"
+                    android:layout_gravity="center|center_horizontal"
+                    android:layout_weight="1"
+                    gauge:initialValue="0"
+                    gauge:lowerText="Batterie"
+                    gauge:maxValue="100"
+                    gauge:minValue="0"
+                    gauge:needleColor="@color/blue"
+                    gauge:totalNicks="150"
+                    gauge:upperText="%"
+                    gauge:valuePerNick="1" />
+
+                <Space
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:gravity="center_horizontal"
-                    android:text="@string/zero" />
+                    android:layout_weight="1" />
+
+                <de.nitri.gauge.Gauge
+                    android:id="@+id/gauge"
+                    android:layout_width="132dp"
+                    android:layout_height="114dp"
+                    android:layout_gravity="center|center_horizontal"
+                    gauge:initialValue="22"
+                    gauge:lowerText="d"
+                    gauge:maxValue="1000"
+                    gauge:minValue="0"
+                    gauge:totalNicks="120"
+                    gauge:valuePerNick="10" />
+
+                <Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
+                <de.nitri.gauge.Gauge
+                    android:id="@+id/gaugeliquide"
+                    android:layout_width="97dp"
+                    android:layout_height="94dp"
+                    android:layout_gravity="center|center_horizontal"
+                    android:layout_weight="1"
+                    gauge:initialValue="0"
+                    gauge:lowerText="Temp"
+                    gauge:maxValue="180"
+                    gauge:minValue="0"
+                    gauge:needleColor="@color/debug_green"
+                    gauge:totalNicks="100"
+                    gauge:upperText="°C"
+                    gauge:valuePerNick="2" />
 
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:orientation="vertical">
+                android:layout_width="match_parent"
+                android:layout_height="159dp"
+                android:gravity="center_horizontal"
+                android:orientation="horizontal">
 
-                <TextView
-                    android:id="@+id/textView8"
-                    android:layout_width="match_parent"
-                    android:layout_height="35dp"
-                    android:background="@drawable/back"
-                    android:gravity="center_horizontal"
-                    android:text="@string/arditance" />
+                <de.nitri.gauge.Gauge
+                    android:id="@+id/gaugeRPM"
+                    android:layout_width="193dp"
+                    android:layout_height="159dp"
+                    android:layout_gravity="center|center_horizontal"
+                    android:layout_marginStart="0dp"
+                    android:layout_weight="1"
+                    gauge:initialValue="0   "
+                    gauge:lowerText="RPM"
+                    gauge:maxValue="8000"
+                    gauge:minValue="0"
+                    gauge:totalNicks="100"
+                    gauge:upperText="tr/min"
+                    gauge:valuePerNick="100" />
 
-                <TextView
-                    android:id="@+id/Text_dist_ar"
-                    android:layout_width="match_parent"
+                <Space
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:gravity="center_horizontal"
-                    android:text="@string/zero" />
+                    android:layout_weight="1" />
 
+                <de.nitri.gauge.Gauge
+                    android:id="@+id/gaugeVit"
+                    android:layout_width="164dp"
+                    android:layout_height="159dp"
+                    android:layout_gravity="center|center_horizontal"
+                    android:layout_marginStart="0dp"
+                    android:layout_weight="1"
+                    gauge:initialValue="0"
+                    gauge:lowerText="Vitesse"
+                    gauge:maxValue="200"
+                    gauge:minValue="0"
+                    gauge:totalNicks="120"
+                    gauge:upperText="km/h"
+                    gauge:valuePerNick="2" />
             </LinearLayout>
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginBottom="5dp"
+                android:background="@drawable/back"
+                android:gravity="center_horizontal"
+                android:text="@string/text_capteur" />
 
             <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:id="@+id/layout_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/textView9"
-                    android:layout_width="match_parent"
-                    android:layout_height="35dp"
-                    android:background="@drawable/back"
-                    android:gravity="center_horizontal"
-                    android:text="@string/avditance" />
-
-                <TextView
-                    android:id="@+id/Text_dist_av"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:baselineAligned="false"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/textView18"
+                            android:layout_width="match_parent"
+                            android:layout_height="35dp"
+                            android:background="@drawable/back"
+                            android:gravity="center_horizontal"
+                            android:text="@string/capteur_temp" />
+
+                        <TextView
+                            android:id="@+id/Text_Temp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_horizontal"
+                            android:text="@string/zero" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/textView14"
+                            android:layout_width="match_parent"
+                            android:layout_height="35dp"
+                            android:background="@drawable/back"
+                            android:gravity="center_horizontal"
+                            android:text="@string/luminosité" />
+
+                        <TextView
+                            android:id="@+id/Text_luminosité"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_horizontal"
+                            android:text="@string/zero" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="0dp"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/textView11"
+                            android:layout_width="match_parent"
+                            android:layout_height="35dp"
+                            android:background="@drawable/back"
+                            android:gravity="center_horizontal"
+                            android:text="@string/humidité" />
+
+                        <TextView
+                            android:id="@+id/Text_hummidité"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_horizontal"
+                            android:text="@string/zero" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:baselineAligned="false"
                     android:gravity="center_horizontal"
-                    android:text="@string/zero" />
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_horizontal"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/textView3"
+                            android:layout_width="match_parent"
+                            android:layout_height="35dp"
+                            android:background="@drawable/back"
+                            android:gravity="center_horizontal"
+                            android:text="@string/Text_pression" />
+
+                        <TextView
+                            android:id="@+id/Text_pression_athmos"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_horizontal"
+                            android:text="@string/zero" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/textView8"
+                            android:layout_width="match_parent"
+                            android:layout_height="35dp"
+                            android:background="@drawable/back"
+                            android:gravity="center_horizontal"
+                            android:text="@string/arditance" />
+
+                        <TextView
+                            android:id="@+id/Text_dist_ar"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_horizontal"
+                            android:text="@string/zero" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/textView9"
+                            android:layout_width="match_parent"
+                            android:layout_height="35dp"
+                            android:background="@drawable/back"
+                            android:gravity="center_horizontal"
+                            android:text="@string/avditance" />
+
+                        <TextView
+                            android:id="@+id/Text_dist_av"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_horizontal"
+                            android:text="@string/zero" />
+
+                    </LinearLayout>
+                </LinearLayout>
 
             </LinearLayout>
+
+            <Button
+                android:id="@+id/button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="testbutton"
+                android:text="Button_test_gauge" />
+
+            <Button
+                android:id="@+id/button2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="test"
+                android:text="Button_test" />
+
+            <Button
+                android:id="@+id/button3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="testmulti"
+                android:text="Button_test_multi" />
+
+
         </LinearLayout>
-
-        <Button
-            android:id="@+id/button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:onClick="testbutton"
-            android:text="Button_test_gauge" />
-
-        <Button
-            android:id="@+id/button2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:onClick="test"
-            android:text="Button_test" />
-
-    </LinearLayout>
+    </ScrollView>
 
 </android.support.constraint.ConstraintLayout>
