@@ -1,33 +1,35 @@
 package com.evanblondeau.tuto_bl;
 
+import android.app.Application;
+import android.app.Service;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothServerSocket;
 import android.bluetooth.BluetoothSocket;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Handler;
+import android.os.IBinder;
+import android.os.Message;
+import android.os.Messenger;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.github.pires.obd.commands.protocol.ObdResetCommand;
-import com.github.pires.obd.exceptions.MisunderstoodCommandException;
-import com.github.pires.obd.exceptions.NoDataException;
-import com.github.pires.obd.exceptions.UnableToConnectException;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.Serializable;
 import java.nio.charset.Charset;
 import java.util.UUID;
 import java.util.regex.Pattern;
 
 import needle.Needle;
 
-import static java.lang.System.in;
 
-public class BluetoothConnectionService {
+//permet d'établir la connection bluetooth , voir Main activity pour comprendre la démarche à réalisé
+public class BluetoothConnectionService  {
 
     private static final String TAG = "BluetoothConnectionService";
 
@@ -35,8 +37,8 @@ public class BluetoothConnectionService {
 
     private static final UUID MY_UUID = UUID.fromString("00001800-0000-1000-8000-00805f9b34fb");
 
-    private final BluetoothAdapter mBluetoothAdapter;
-    Context mContext;
+    BluetoothAdapter mBluetoothAdapter;
+    Context  mContext;
 
     private AcceptThread mInsecureAcceptThread;
 
@@ -53,7 +55,9 @@ public class BluetoothConnectionService {
 
     private String message_denvoie;
 
-    public BluetoothConnectionService(Context context) {
+
+
+   public BluetoothConnectionService(Context context) {
         mContext = context;
 
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
@@ -62,7 +66,7 @@ public class BluetoothConnectionService {
 
     private class AcceptThread extends Thread {
         //local server socket
-        private final BluetoothServerSocket mServerSocket;
+        private  final BluetoothServerSocket mServerSocket;
 
         public AcceptThread() {
             BluetoothServerSocket tmp = null;
@@ -115,7 +119,7 @@ public class BluetoothConnectionService {
      * with a device. It runs straight through; the connection either
      * succeeds or fails.
      */
-    private class ConnectThread extends Thread {
+    private class ConnectThread extends Thread implements Serializable {
         private BluetoothSocket mSock;
 
         public ConnectThread(BluetoothDevice device, UUID uuid) {
@@ -138,7 +142,13 @@ public class BluetoothConnectionService {
             mSock = tmp;
 
             //Always cancel discovery
-            mBluetoothAdapter.cancelDiscovery();
+            Needle.onMainThread().execute(new Runnable() {
+                @Override
+                public void run() {
+                    BluetoothAdapter d = BluetoothAdapter.getDefaultAdapter();
+                    d.cancelDiscovery();
+                    Log.d(TAG, "run: cancel discovery done");}
+            });
 
             // Make a connection to the BluetoothSocket
             try {
@@ -148,7 +158,7 @@ public class BluetoothConnectionService {
                     @Override
                     public void run() {
                         MainActivity.getInstance().changeProgressBar(50, "RED");
-                        Toast.makeText(mContext, "Trying to connect to " + mDevice.getName(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MainActivity.getInstance(), "Trying to connect to " + mDevice.getName(), Toast.LENGTH_SHORT).show();
                     }
                 });
                 mSock.connect();
@@ -157,7 +167,7 @@ public class BluetoothConnectionService {
                     public void run() {
                         MainActivity.getInstance().changeProgressBar(100, "GREEN");
                         MainActivity.getInstance().changeConnectionState("Connected");
-                        Toast.makeText(mContext, "Connected to " + mDevice.getName(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MainActivity.getInstance(), "Connected to " + mDevice.getName(), Toast.LENGTH_SHORT).show();
                         MainActivity.getInstance().enableBtnSend(true);
                     }
                 });
@@ -181,7 +191,7 @@ public class BluetoothConnectionService {
                         public void run() {
                             MainActivity.getInstance().changeProgressBar(100, "GREEN");
                             MainActivity.getInstance().changeConnectionState("Connected");
-                            Toast.makeText(mContext, "Connected to " + mDevice.getName(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(MainActivity.getInstance(), "Connected to " + mDevice.getName(), Toast.LENGTH_SHORT).show();
                             MainActivity.getInstance().enableBtnSend(true);
                         }
                     });
@@ -250,9 +260,9 @@ public class BluetoothConnectionService {
 
     private class ConnectedThread extends Thread {
 
-        private final BluetoothSocket mSockett;
-        private final InputStream mInputStream;
-        private final OutputStream mOutputStream;
+        private transient final BluetoothSocket mSockett;
+        private transient final InputStream mInputStream;
+        private transient final OutputStream mOutputStream;
         String msg = "";
 
         public ConnectedThread(BluetoothSocket socket) {
@@ -305,7 +315,7 @@ public class BluetoothConnectionService {
 
                             Intent incomingMessageIntent = new Intent("incomingMessage");
                             incomingMessageIntent.putExtra("theMessage", OutFinal);
-                            LocalBroadcastManager.getInstance(mContext).sendBroadcast(incomingMessageIntent);
+                            LocalBroadcastManager.getInstance(MainActivity.getInstance()).sendBroadcast(incomingMessageIntent);
 
                             msg = "";
                         } else {
@@ -398,6 +408,9 @@ public class BluetoothConnectionService {
 
 
     }
+
+
+
 
 
 }

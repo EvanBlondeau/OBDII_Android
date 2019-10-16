@@ -114,17 +114,25 @@
                 <LinearLayout
                     android:layout_width="135dp"
                     android:layout_height="match_parent"
+                    android:layout_marginStart="10dp"
                     android:gravity="center|center_horizontal"
                     android:orientation="vertical">
 
                     <Button
                         android:id="@+id/Start"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_alignParentTop="true"
                         android:layout_alignParentEnd="true"
                         android:layout_marginEnd="0dp"
+                        android:background="@drawable/button_custom"
+                        android:shadowColor="#A8A8A8"
+                        android:shadowDx="0"
+                        android:shadowDy="0"
+                        android:shadowRadius="5"
                         android:text="@string/Button_connection"
+                        android:textColor="#FFFFFF"
+                        android:textSize="14sp"
                         android:textStyle="normal"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -304,7 +312,7 @@
                     android:layout_marginStart="0dp"
                     android:layout_marginBottom="0dp"
                     android:layout_toStartOf="@+id/btnSend"
-                    android:hint="Enter your text"
+                    android:hint="Enter your request"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent" />
 
@@ -323,8 +331,17 @@
                     android:layout_marginBottom="0dp"
                     android:gravity="center_horizontal|center_vertical"
                     android:text="Send"
+                    android:textColor="#FFFFFF"
+                    android:textSize="14sp"
+                    android:shadowColor="#A8A8A8"
+                    android:shadowDx="0"
+                    android:shadowDy="0"
+                    android:background="@drawable/button_custom"
+                    android:shadowRadius="5"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent" />
+
+
             </LinearLayout>
 
 

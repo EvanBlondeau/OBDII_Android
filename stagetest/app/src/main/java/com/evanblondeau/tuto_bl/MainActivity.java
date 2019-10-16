@@ -1,12 +1,10 @@
 package com.evanblondeau.tuto_bl;
 
 import android.Manifest;
-import android.app.Dialog;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.res.ColorStateList;
@@ -15,23 +13,13 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.text.Layout;
 import android.util.Log;
-import android.util.TypedValue;
-import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
-import android.widget.AbsListView;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -40,26 +28,23 @@ import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Document;
-
+import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
 import java.util.regex.Pattern;
 
 import de.nitri.gauge.Gauge;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity  {
 
 //region Global variable
     private static final String TAG = "Main Activity";
@@ -67,7 +52,6 @@ public class MainActivity extends AppCompatActivity {
     BluetoothAdapter mBluetoothAdapter;
 
     private static MainActivity instance;
-    Button buttonessai;
     BluetoothConnectionService mBluetoothConnectionService;
 
     private static final UUID MY_UUID = UUID.fromString("00001800-0000-1000-8000-00805f9b34fb");
@@ -88,18 +72,6 @@ public class MainActivity extends AppCompatActivity {
     TextView text_con_state;
     TextView strIn;
     LinearLayout InString;
-    Gauge gaugeBat;
-    Gauge gaugeVit;
-    Gauge gaugeRpm;
-    Gauge gaugeLiq;
-    TextView text_temp;
-    TextView text_lum;
-    TextView text_hum;
-    TextView text_dist_ar;
-    TextView text_dist_av;
-    TextView text_pression;
-
-    Document doc;
 
     ScrollView scrollOut;
     ScrollView scrollIn;
@@ -115,22 +87,24 @@ public class MainActivity extends AppCompatActivity {
     ListView listPairedDevice;
 
     ArrayList<ArrayList<ArrayList<Object>>> listSprite = new ArrayList<>();
-    ArrayList<ArrayList<Object>> listGauge = new ArrayList<>();
+    /*ArrayList<ArrayList<Object>> listGauge = new ArrayList<>();
     ArrayList<ArrayList<Object>> listText = new ArrayList<>();
     ArrayList<Object> listGaugeInde = new ArrayList<>();
-    ArrayList<Object> listTextInde = new ArrayList<>();
+    ArrayList<Object> listTextInde = new ArrayList<>();*/
+
+    //DecryptMessage decryptMessage;
 
     LinearLayout linearLayoutText;
-    ArrayList<LinearLayout> Tab_add_Text = new ArrayList<>();
-    int number_add;
+    //ArrayList<LinearLayout> Tab_add_Text = new ArrayList<>();
+
 //endregion
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // btnEnableDisable_discoverable = findViewById(R.id.btn_enbale_disco);
         listDevice = findViewById(R.id.list);
         listPairedDevice = findViewById(R.id.listPaired);
         mBTDevice = new ArrayList<>();
@@ -156,18 +130,20 @@ public class MainActivity extends AppCompatActivity {
         text_test = findViewById(R.id.texttest);
         messages = new StringBuilder();
 
-
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         btnStartConnection = findViewById(R.id.Start);
         btnSend = findViewById(R.id.btnSend);
         editText = findViewById(R.id.Edit);
 
+        //clique sur le bouton de connection
         btnStartConnection.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startConnection();
             }
         });
+
+        //Clique sur le bouton send
         btnSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -186,6 +162,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        //Quand l'on clique sur un bouton de la liste des apareils bluetooth decvouvert
         listDevice.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -208,12 +185,16 @@ public class MainActivity extends AppCompatActivity {
                         mBTDevice.get(position).createBond();
                     }
                     mBluetoothDevice = mBTDevice.get(position);
-                    mBluetoothConnectionService = new BluetoothConnectionService((MainActivity.this));
+                    mBluetoothConnectionService = new BluetoothConnectionService(mContext);
+                   // mBluetoothConnectionService.onStartCommand()
 
                 }
+                blestore.getInstance().onCreate();
+                //BroadReceiver dd=new BroadReceiver();
             }
         });
 
+        //Quand l'on clique sur un bouton de la liste des apareils bluetooth deja appairé !
         listPairedDevice.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -225,7 +206,7 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(MainActivity.this, "Bounded to " + deviceName, Toast.LENGTH_SHORT).show();
                 text_id.setText(deviceName);
 
-                mBluetoothConnectionService = new BluetoothConnectionService((MainActivity.this));
+                mBluetoothConnectionService = new BluetoothConnectionService(mContext);
                 mBluetoothDevice = mBTPairedDevice.get(position);
                 enableBtnCon(true);
             }
@@ -236,7 +217,7 @@ public class MainActivity extends AppCompatActivity {
         pairedDevices(this);
         enableBtnCon(false);
         enableBtnSend(false);
-        number_add=0;
+
     }
 
     public void enableBtnCon(boolean val) {
@@ -264,8 +245,62 @@ public class MainActivity extends AppCompatActivity {
         return instance;
     }
 
+
+//region Menu et Toolbar
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        if (id_view == 0) {
+            getMenuInflater().inflate(R.menu.menu_main, menu);
+        } /*else if (id_view == 1) {
+            getMenuInflater().inflate(R.menu.menu_gauge, menu);
+        }*/
+
+
+        this.menu = menu;
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_BLE) {
+            Log.d(TAG, "OnClick: enabledisable BLE");
+            enableDisableBT();
+            return true;
+        } else if (id == R.id.action_Disco) {
+            disco_Device();
+        } else if (id == R.id.action_Gauge) {
+            Intent intent = new Intent(getBaseContext(), GaugeClass.class);
+            DecryptMessage decryptMessage = null;
+            try {
+                decryptMessage = new DecryptMessage(getAssets().open("PID.json"));
+                Log.d(TAG, "open json");
+            } catch (IOException e) {
+                e.printStackTrace();
+                Log.d(TAG, "open not json");
+            }
+
+            blestore.getInstance().setMyBlueComms(mBluetoothConnectionService);
+            Intent myIntent = new Intent(MainActivity.this, GaugeClass.class);
+            myIntent.putExtra("key", "hello"); //Optional parameters
+            MainActivity.this.startActivity(myIntent);
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+//endregion
+
+    //region BLE
+
     // Create a BroadcastReceiver for ACTION CHANGE BLE.
     private final BroadcastReceiver mBroadcastReceiver = new BroadcastReceiver() {
+
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
             if (action.equals(mBluetoothAdapter.ACTION_STATE_CHANGED)) {
@@ -361,125 +396,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        if (id_view == 0) {
-            getMenuInflater().inflate(R.menu.menu_main, menu);
-        } else if (id_view == 1) {
-            getMenuInflater().inflate(R.menu.menu_gauge, menu);
-        }
 
-
-        this.menu = menu;
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_BLE) {
-            Log.d(TAG, "OnClick: enabledisable BLE");
-            enableDisableBT();
-            return true;
-        } else if (id == R.id.action_Disco) {
-            disco_Device();
-        } else if (id == R.id.action_Gauge) {
-
-            listSprite = new ArrayList<>();
-
-            id_view = 1;
-            setContentView(R.layout.activity_sprite);
-            Toolbar toolbar = findViewById(R.id.toolbar);
-
-            linearLayoutText = findViewById(R.id.layout_text);
-
-            setSupportActionBar(toolbar);
-            Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setDisplayShowHomeEnabled(true);
-
-            listGauge = new ArrayList<>();
-            gaugeLiq = findViewById(R.id.gaugeliquide);
-            addTextGauge(gaugeLiq, "5C", listGaugeInde, listGauge);
-
-            gaugeBat = findViewById(R.id.gaugeBaterry);//pas encore d'info ici
-
-            gaugeRpm = findViewById(R.id.gaugeRPM);
-            addTextGauge(gaugeRpm, "0C", listGaugeInde, listGauge);
-
-            gaugeVit = findViewById(R.id.gaugeVit);
-            addTextGauge(gaugeVit, "0D", listGaugeInde, listGauge);
-
-            listSprite.add(listGauge);
-
-            listText = new ArrayList<>();
-
-            text_temp = findViewById(R.id.Text_Temp);//ok
-            addTextGauge(text_temp, "46", listTextInde, listText);
-
-            text_pression = findViewById(R.id.Text_pression_athmos);//ok
-            addTextGauge(text_pression, "33", listTextInde, listText);
-
-            text_lum = findViewById(R.id.Text_luminosité);//pas encore d'info ici
-            text_hum = findViewById(R.id.Text_hummidité);//pas encore d'info ici
-            text_dist_ar = findViewById(R.id.Text_dist_ar);//pas encore d'info ici
-            text_dist_av = findViewById(R.id.Text_dist_av);//pas encore d'info ici
-
-            listSprite.add(listText);
-
-            //  ListPID();
-
-        } else if (id == R.id.action_add) {
-            Log.d(TAG, "onOptionsItemSelected: hello tt le monde ");
-            MyDialogModal();
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    private void addTextGauge(Object print_type, String pidNumber, ArrayList listTextInde_or_gaugeInde, ArrayList listText_or_Gauge) {
-        listTextInde_or_gaugeInde = new ArrayList<>();
-        listTextInde_or_gaugeInde.add(pidNumber);
-        listTextInde_or_gaugeInde.add(print_type);
-        listText_or_Gauge.add(listTextInde_or_gaugeInde);
-    }
-
-    @Override
-    public boolean onSupportNavigateUp() {
-        id_view = 0;
-        setContentView(R.layout.activity_main);
-
-        Toolbar toolbar = findViewById(R.id.toolbar);
-
-        setSupportActionBar(toolbar);
-        return true;
-    }
-
-    BroadcastReceiver mReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            String text = intent.getStringExtra("theMessage");
-            //Log.d(TAG, "onReceive : " +text);
-            if (id_view == 0) {
-
-                OutString = findViewById(R.id.LinearOut);
-                messages.append(" > ").append(text);
-                textOut = new TextView(context);
-                textOut.setText(messages);
-                OutString.addView(textOut);
-                scrollOut.fullScroll(View.FOCUS_DOWN);
-            } else if (id_view == 1) {
-                decode_resp(text);
-               // correspondancePIDJSON(text);
-            }
-            messages = new StringBuilder();
-        }
-    };
 
 
     //created method for starting connection
@@ -578,14 +495,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void changeProgressBar(int value, String color) {
-        progressBar.setProgress(value);
-        if (color.equals("GREEN")) {
-            progressBar.setProgressTintList(ColorStateList.valueOf(Color.GREEN));
-        } else {
-            progressBar.setProgressTintList(ColorStateList.valueOf(Color.RED));
-        }
-    }
+
 
     public void pairedDevices(Context context) {
         Set<BluetoothDevice> pairedDevices = mBluetoothAdapter.getBondedDevices();
@@ -611,6 +521,41 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    public void changeProgressBar(int value, String color) {
+        progressBar.setProgress(value);
+        if (color.equals("GREEN")) {
+            progressBar.setProgressTintList(ColorStateList.valueOf(Color.GREEN));
+        } else {
+            progressBar.setProgressTintList(ColorStateList.valueOf(Color.RED));
+        }
+    }
+    //endregion
+
+
+    // il faut faire une classe receiver !!! surtout pour cette partie car on doit gerer plusieur cas
+    // et kes reponse ne s'affiche pas dans les meme fenetre / activities
+    BroadcastReceiver mReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String text = intent.getStringExtra("theMessage");
+            //Log.d(TAG, "onReceive : " +text);
+            if (id_view == 0) {
+
+                OutString = findViewById(R.id.LinearOut);
+                messages.append(" > ").append(text);
+                textOut = new TextView(context);
+                textOut.setText(messages);
+                OutString.addView(textOut);
+                scrollOut.fullScroll(View.FOCUS_DOWN);
+            }
+
+            messages = new StringBuilder();
+        }
+    };
+
+    //region decryptage
+    //, ne sert pas dans cette activity mais si une autre activity veut que les
+    //messages soit decrypté, il faut faire une classe !
     private static Pattern WHITESPACE_PATTERN = Pattern.compile("\\s");
 
     protected String removeAll(Pattern pattern, String input) {
@@ -811,206 +756,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void testbutton(View view) {
-        Log.d(TAG, "onClick: dd");
-        loop();
-    }
-
-    public void test(View view) {
-        if(!running){
-            loop2(1);
-        }else{
-            running=false;
-        }
-
-    }
-
-    public void testmulti(View view) {
-
-        if(!runningmulti){
-            loop2(2);
-        }else{
-            runningmulti=false;
-        }
-
-    }
-    Thread t;
-    Thread d;
-    boolean running=false;
-    boolean runningmulti=false;
-    public void loop2(int var) {
-        if(var==1){
-            running=true;
-            t=  new Thread(new Runnable() {
-                public void run() {
-                    // loop until the thread is interrupted
-                    while (running) {
-                        byte[] bytes = ("01 0C" + "\r").getBytes(Charset.defaultCharset());
-
-                        mBluetoothConnectionService.write(bytes, "01 0C");
-                        try {
-                            Thread.sleep(500);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }
-            });
-            t.start();
-        }else if(var ==2){
-            runningmulti=true;
-           d= new Thread(new Runnable() {
-
-                public void run() {
-                    // loop until the thread is interrupted
-                    while (runningmulti) {
-                        byte[] bytes = ("01 0C 05 04 0D 33" + "\r").getBytes(Charset.defaultCharset());
-                        mBluetoothConnectionService.write(bytes, "01 0C 05 04 0D 33");
-                        try {
-                            Thread.sleep(500);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }
-            });
-           d.start();
-        }
-
-    }
-
-
-    public void loop() {
-        new Thread(new Runnable() {
-            public void run() {
-                // loop until the thread is interrupted
-                while (!Thread.currentThread().isInterrupted()) {
-                    //byte[] bytes = ("01 0C 05 OD 33" + "\r").getBytes(Charset.defaultCharset());
-                   // mBluetoothConnectionService.write(bytes, "01 0C 05 OD 33");5C 40 05 50 04 08
-
-                    decode_resp("00A 0:41 0C 4F FF 0D 08 1:33 5F 46 02 00 00 00");
-
-                    try {
-                        Thread.sleep(2000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-
-                   /* byte[] bytes = ("01 0C 05 OD 33" + "\r").getBytes(Charset.defaultCharset());
-                    mBluetoothConnectionService.write(bytes, "01 0C 05 OD 33");*/
-
-                    decode_resp("41 0C 00 FF 0D 80 33 51 46 80 5C 8F 05 F0 04 F8");
-
-                    try {
-                        Thread.sleep(1000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-
-                }
-            }
-        }).start();
-    }
-
-    TextView text_PID;
-    ArrayList<ItemList> ListItem;
-    String Description = "";
-    String PID = "";
-
-    public void MyDialogModal() {
-        // ListPID();
-        AlertDialog.Builder mBuilder = new AlertDialog.Builder(MainActivity.this);
-        //list_dialog.setContentView(R.layout.list_dialog);
-
-        View mView = getLayoutInflater().inflate(R.layout.dialogbox, null);
-
-        mBuilder.setTitle("Add a new PID");
-
-        text_PID = mView.findViewById(R.id.text_choixPID);
-        mBuilder.setPositiveButton(R.string.but_dialog_pos, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                dialog.cancel();
-                creationNewLayout(Description,PID);
-            }
-        });
-        mBuilder.setNegativeButton(R.string.but_dialog_neg, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                dialog.cancel();
-            }
-        });
-
-        ListItem = ListPID();
-        ListView listView = mView.findViewById(R.id.lst);
-
-        CustomAdapter adapter = new CustomAdapter(this, R.layout.listviewadapter, ListItem);
-        listView.setAdapter(adapter);
-
-
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                PID = ListItem.get(position).getText1();
-                Description = ListItem.get(position).getText2();
-                Log.d(TAG, "on click pair: " + PID + " : " + Description);
-
-                text_PID.setText(PID + " : " + Description);
-
-            }
-        });
-
-        mBuilder.setView(mView);
-
-        AlertDialog dialog = mBuilder.create();
-        dialog.show();
-    }
-
-    private void creationNewLayout(String title,String PID_list){
-        if((number_add%3)==0){
-
-            LinearLayout vert = new LinearLayout(this);
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-            float marg_start = getResources().getDimension(R.dimen.start_margin);
-            float marg_end = getResources().getDimension(R.dimen.end_margin);
-            params.setMarginStart((int) marg_start);
-            params.setMarginEnd((int) marg_end);
-
-            vert.setLayoutParams(params);
-            vert.setOrientation(LinearLayout.HORIZONTAL);
-            Tab_add_Text.add(vert);
-            linearLayoutText.addView(vert);
-        }
-        creationNewText(title,PID_list);
-    }
-
-    private void creationNewText(String title,String PID_list) {
-
-        LinearLayout horiz = new LinearLayout(this);
-        horiz.setLayoutParams(new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT,1.0f));
-        horiz.setOrientation(LinearLayout.VERTICAL);
-
-        TextView tv1 = new TextView(this);
-        TextView tv2 = new TextView(this);
-        tv1.setGravity(Gravity.CENTER);
-        tv2.setGravity(Gravity.CENTER);
-
-        LinearLayout.LayoutParams params2 = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        float heigth = getResources().getDimension(R.dimen.heigth);
-        LinearLayout.LayoutParams params1 = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, (int) heigth);
-        tv2.setLayoutParams(params2);
-        tv1.setBackgroundResource(R.drawable.back);
-        tv1.setText(title);
-        tv2.setText("0");
-        tv1.setLayoutParams(params1);
-
-        LinearLayout e = Tab_add_Text.get(Tab_add_Text.size() - 1);
-
-        e.addView(horiz);
-        horiz.addView(tv1);
-        horiz.addView(tv2);
-        number_add++;
-        addTextGauge(tv2, PID_list, listTextInde, listText);
-    }
-
     private ArrayList<ItemList> ListPID() {
         ArrayList<ItemList> mitemRecyclerViews = new ArrayList<>();
         List<String> mm = new ArrayList<>();
@@ -1048,6 +793,10 @@ public class MainActivity extends AppCompatActivity {
 
         return mitemRecyclerViews;
     }
+
+    //endregion
+
+
 
 
 }

@@ -13,6 +13,7 @@
     <string name="Text_null">\?</string>
     <string name="Text_Tableaudebord">Tableau de bord</string>
     <string name="text_capteur">Données des capteurs</string>
+    <string name="text_Serveur">HTTP and WebSocket Server</string>
     <string name="humidité">Capteur de l humidité</string>
     <string name="luminosité">Capteur de luminosité</string>
     <string name="avditance">Capteur de distance avant</string>

@@ -30,7 +30,7 @@ public class DeviceListAdapter extends ArrayAdapter<BluetoothDevice> {
 
         if (device != null) {
             TextView deviceName = convertView.findViewById(R.id.txt_name);
-            TextView deviceAdress = convertView.findViewById(R.id.txt_adr);
+            TextView deviceAdress = convertView.findViewById(R.id.txt_adrrrr);
 
             if (deviceName != null) {
                 deviceName.setText(device.getName());
