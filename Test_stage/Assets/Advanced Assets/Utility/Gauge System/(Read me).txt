@@ -1,0 +1,41 @@
+| Gauge System | v2.1.7 f1 | Made by Misleader [Developer] |
+
+You should agree on these [4] points in order to use this asset:
+[1] You are not allowed to sell/publish/giveaway this asset to others, as it is free.
+[2] You are not required to credit me in your game/film, but if you do so, i appreciate it.
+[3] You are allowed to use this asset free/commercially in complete/built projects only (games, films, etc..). (It does not matter if your game is in Alpha, Beta or Finished)
+[4] You are allowed to link/include this asset with your/other assets to publish, but you will be required to credit me and my asset by including this (Read me) text file in your asset.
+
+-What is this asset for?
+  This is a great asset to make gauges for cars, trucks, planes, nitrous oxide, etc..
+  With a few clicks and tweaking, you can get nice results!
+  It offers a lot of customizations for you to tweak.
+
+-How can i add the scripts if i want to start by the defaults?
+  [1] Component > Advanced Assets > Utility > Gauge System.
+  [2] Add Component > Advanced Assets > Utility > Gauge System.
+  [3] Advanced Assets > Utility > Gauge System.
+  [4] Drag & Drop the script onto the gameobject.
+
+-How can i use this asset on my assets, like a Car Controller?
+  [Gauge System]
+    First of all you have to add a Gauge System object.
+    Then customize it if you want, set the dimension type to Two Dimensional (2D) or Three Dimensional (3D), and set the gauge type to Analog or Digital.
+    And enable colors and sizes and positions to be overriden.
+    And let's say we want to make a speedometer gauge..
+  [Gauge Target]
+    Add the Gauge Target on the car that you want to use.
+    Then in Targets click + button, and in the Name field write a name like Speed.
+    And in the Gauge field put the gauge object into it, and in Target field put your Car Controller script into it.
+    Then in Value Name write speed, and in Maximum Value Name write topSpeed, note that you should write the correct name of the variable, including uppercase and lowercase letters and without any spaces.
+    So now you have to set how many numbers or big lines with texts you want to display.
+    In Values click + button and put a number in the fields, for example if your top speed is 100, then we can add [0 , 25 , 50 , 75 and 100]
+    And you're done, press Play and enjoy.
+
+-How can i give feedbacks and improvements and updates or ideas for this asset?
+  You can submit a form at:
+    [Site] https://sites.google.com/site/misleaderyt/developer/downloads
+    [Form] https://goo.gl/forms/OzjSoHYbvt8gJboo2
+  Or you can contact me via:
+    [Facebook] https://facebook.com/100018354584985
+    [Youtube]  https://youtube.com/channel/UCfduxC1x80UGUepiZp555_A

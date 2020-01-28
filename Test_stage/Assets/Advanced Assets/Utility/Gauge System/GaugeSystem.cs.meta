@@ -1,0 +1,40 @@
+fileFormatVersion: 2
+guid: 29bb082d342767441adafab6384f5bee
+timeCreated: 1534952860
+licenseType: Free
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences:
+  - primaryMaterial: {instanceID: 0}
+  - secondaryMaterial: {instanceID: 0}
+  - needleMaterial: {instanceID: 0}
+  - lineHandler: {instanceID: 0}
+  - bigLine: {instanceID: 0}
+  - smallLine: {instanceID: 0}
+  - needleHandler: {instanceID: 0}
+  - needle: {instanceID: 0}
+  - textFont: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+  - text: {instanceID: 0}
+  - bigLine2D: {fileID: 105686, guid: e854e0edc1c02564ab8d68e787b93836, type: 2}
+  - bigLine3DSpriteRenderer: {fileID: 184306, guid: 541716fb005ca394ead06a5b33dc8286,
+      type: 2}
+  - bigLine3DMeshRenderer: {fileID: 177284, guid: 79a9c0618c0d96e469d74d0f0f0e9f66,
+      type: 2}
+  - smallLine2D: {fileID: 100476, guid: 49ebe10153b011446be62f8da96a5fe7, type: 2}
+  - smallLine3DSpriteRenderer: {fileID: 174024, guid: cef1c41b40664334d9ce1af5843a6eb0,
+      type: 2}
+  - smallLine3DMeshRenderer: {fileID: 195770, guid: 8842ec592dc8f6247ac02003389f2585,
+      type: 2}
+  - needle2D: {fileID: 101662, guid: cb15b639efc2e034da616c05942a8128, type: 2}
+  - needle3DSpriteRenderer: {fileID: 159912, guid: 063145cefff2b644b812a9e79cea2ea2,
+      type: 2}
+  - needle3DMeshRenderer: {fileID: 123180, guid: 83c88848b065c214688bfbaf2b9727b6,
+      type: 2}
+  - bigLineTracker: {instanceID: 0}
+  - smallLineTracker: {instanceID: 0}
+  - needleTracker: {instanceID: 0}
+  executionOrder: 0
+  icon: {fileID: 2800000, guid: d4bca1f8ff21f434bb766b4dbd84aef3, type: 3}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
